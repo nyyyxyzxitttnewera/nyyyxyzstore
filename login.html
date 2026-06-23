@@ -1,33 +1,45 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <title>Login</title>
-  <link rel="stylesheet" href="style.css">
-</head>
-<body>
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+  import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, GoogleAuthProvider, signInWithPopup } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
 
-<div class="hero">
-  <h1>Login Panel</h1>
+  const firebaseConfig = {
+    apiKey: "ISI_PUNYA_LU",
+    authDomain: "ISI_PUNYA_LU",
+    projectId: "ISI_PUNYA_LU",
+  };
 
-  <input type="text" placeholder="Username"><br><br>
-  <input type="password" placeholder="Password"><br><br>
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
 
-  <button>Login</button>
-</div>
+  window.login = function() {
+    const email = document.getElementById("email").value;
+    const password = document.getElementById("password").value;
 
-</body>
-</html>
+    signInWithEmailAndPassword(auth, email, password)
+      .then(() => {
+        alert("Login berhasil!");
+        window.location.href = "dashboard.html";
+      })
+      .catch(err => alert(err.message));
+  }
 
-<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
+  window.register = function() {
+    const email = document.getElementById("email").value;
+    const password = document.getElementById("password").value;
 
-function loginGoogle() {
-  const provider = new firebase.auth.GoogleAuthProvider();
+    createUserWithEmailAndPassword(auth, email, password)
+      .then(() => alert("Register berhasil!"))
+      .catch(err => alert(err.message));
+  }
 
-  auth.signInWithPopup(provider)
-    .then(result => {
-      alert("Login Google berhasil!");
-      window.location.href = "dashboard.html";
-    })
-    .catch(err => alert(err.message));
-}
+  window.loginGoogle = function() {
+    const provider = new GoogleAuthProvider();
+
+    signInWithPopup(auth, provider)
+      .then(() => {
+        alert("Login Google berhasil!");
+        window.location.href = "dashboard.html";
+      })
+      .catch(err => alert(err.message));
+  }
+</script>
