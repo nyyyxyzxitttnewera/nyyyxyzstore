@@ -1,45 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Login</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="hero">
+  <h1>Login Panel</h1>
+
+  <input id="email" type="email" placeholder="Email"><br><br>
+  <input id="password" type="password" placeholder="Password"><br><br>
+
+  <button onclick="login()">Login</button>
+  <button onclick="register()">Register</button>
+  <button onclick="loginGoogle()">Login Google</button>
+</div>
+
 <script type="module">
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-  import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, GoogleAuthProvider, signInWithPopup } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import { 
+  getAuth, 
+  signInWithEmailAndPassword, 
+  createUserWithEmailAndPassword, 
+  GoogleAuthProvider, 
+  signInWithPopup 
+} from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
 
-  const firebaseConfig = {
-    apiKey: "ISI_PUNYA_LU",
-    authDomain: "ISI_PUNYA_LU",
-    projectId: "ISI_PUNYA_LU",
-  };
+const firebaseConfig = {
+  apiKey: "AIzaSyBhSu9CnvQ-wLG-oHh8ad4DfIVZ3mb54ic",
+  authDomain: "nyyyxyz.firebaseapp.com",
+  projectId: "nyyyxyz",
+  storageBucket: "nyyyxyz.firebasestorage.app",
+  messagingSenderId: "670710617337",
+  appId: "1:670710617337:web:9d9db504507feeebb13e28",
+  measurementId: "G-45GCEKFWYL"
+};
 
-  const app = initializeApp(firebaseConfig);
-  const auth = getAuth(app);
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
 
-  window.login = function() {
-    const email = document.getElementById("email").value;
-    const password = document.getElementById("password").value;
+window.login = function() {
+  const email = document.getElementById("email").value;
+  const password = document.getElementById("password").value;
 
-    signInWithEmailAndPassword(auth, email, password)
-      .then(() => {
-        alert("Login berhasil!");
-        window.location.href = "dashboard.html";
-      })
-      .catch(err => alert(err.message));
-  }
+  signInWithEmailAndPassword(auth, email, password)
+    .then(() => {
+      alert("Login berhasil!");
+      window.location.href = "dashboard.html";
+    })
+    .catch(err => alert(err.message));
+}
 
-  window.register = function() {
-    const email = document.getElementById("email").value;
-    const password = document.getElementById("password").value;
+window.register = function() {
+  const email = document.getElementById("email").value;
+  const password = document.getElementById("password").value;
 
-    createUserWithEmailAndPassword(auth, email, password)
-      .then(() => alert("Register berhasil!"))
-      .catch(err => alert(err.message));
-  }
+  createUserWithEmailAndPassword(auth, email, password)
+    .then(() => alert("Register berhasil!"))
+    .catch(err => alert(err.message));
+}
 
-  window.loginGoogle = function() {
-    const provider = new GoogleAuthProvider();
+window.loginGoogle = function() {
+  const provider = new GoogleAuthProvider();
 
-    signInWithPopup(auth, provider)
-      .then(() => {
-        alert("Login Google berhasil!");
-        window.location.href = "dashboard.html";
-      })
-      .catch(err => alert(err.message));
-  }
+  signInWithPopup(auth, provider)
+    .then(() => {
+      alert("Login Google berhasil!");
+      window.location.href = "dashboard.html";
+    })
+    .catch(err => alert(err.message));
+}
 </script>
+
+</body>
+</html>
