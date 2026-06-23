@@ -1,95 +1,93 @@
 <!DOCTYPE html>
-<html>
+<html lang="id">
 <head>
-  <title>Dashboard</title>
-  <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8">
+<title>Dashboard</title>
+<style>
+body {
+  margin:0;
+  font-family:sans-serif;
+  background:#0f172a;
+  color:white;
+}
+.nav {
+  background:#020617;
+  padding:15px;
+  display:flex;
+  justify-content:space-between;
+}
+.cards {
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+  gap:20px;
+  padding:20px;
+}
+.card {
+  background:#1e293b;
+  padding:20px;
+  border-radius:10px;
+  box-shadow:0 0 10px rgba(0,255,255,0.2);
+}
+button {
+  padding:8px 12px;
+  background:red;
+  border:none;
+  color:white;
+  border-radius:5px;
+}
+</style>
 </head>
 <body>
 
-<h1>VIP Dashboard</h1>
+<div class="nav">
+  <div>🔥 NYYYXYZ PANEL</div>
+  <button onclick="logout()">Logout</button>
+</div>
 
-<p id="user"></p>
-<p>Saldo: Rp <span id="saldo">0</span></p>
-
-<button onclick="tambahSaldo()">Tambah Saldo</button>
-<button onclick="logout()">Logout</button>
-
-<h2>Layanan</h2>
-
-<div class="services">
+<div class="cards">
   <div class="card">
-    <h3>Instagram Boost</h3>
-    <button onclick="order('Instagram')">Order</button>
+    <h3>User</h3>
+    <p id="user"></p>
   </div>
-
   <div class="card">
-    <h3>TikTok Growth</h3>
-    <button onclick="order('TikTok')">Order</button>
+    <h3>Status</h3>
+    <p>Active</p>
   </div>
-
   <div class="card">
-    <h3>YouTube Promo</h3>
-    <button onclick="order('YouTube')">Order</button>
+    <h3>Saldo</h3>
+    <p>Rp 0</p>
   </div>
 </div>
 
 <script type="module">
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
-import { getFirestore, doc, getDoc, setDoc, updateDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import {
+  getAuth,
+  onAuthStateChanged,
+  signOut
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyBhSu9CnvQ-wLG-oHh8ad4DfIVZ3mb54ic",
-  authDomain: "nyyyxyz.firebaseapp.com",
-  projectId: "nyyyxyz",
+  apiKey: "ISI PUNYA LU",
+  authDomain: "ISI PUNYA LU",
+  projectId: "ISI PUNYA LU",
 };
 
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
-const db = getFirestore(app);
 
-let currentUser;
-
-onAuthStateChanged(auth, async (user) => {
+onAuthStateChanged(auth, user => {
   if (user) {
-    currentUser = user;
-    document.getElementById("user").innerText = "Login sebagai: " + user.email;
-
-    const userRef = doc(db, "users", user.uid);
-    const snap = await getDoc(userRef);
-
-    if (!snap.exists()) {
-      await setDoc(userRef, { saldo: 0 });
-      document.getElementById("saldo").innerText = 0;
-    } else {
-      document.getElementById("saldo").innerText = snap.data().saldo;
-    }
-
+    document.getElementById("user").innerText = user.email;
   } else {
-    window.location.href = "login.html";
+    location.href = "login.html";
   }
 });
 
-window.logout = function() {
-  signOut(auth).then(() => {
-    window.location.href = "login.html";
-  });
-}
-
-window.tambahSaldo = async function() {
-  const userRef = doc(db, "users", currentUser.uid);
-  const snap = await getDoc(userRef);
-
-  let saldo = snap.data().saldo + 10000;
-
-  await updateDoc(userRef, { saldo: saldo });
-
-  document.getElementById("saldo").innerText = saldo;
-}
-
-window.order = function(layanan) {
-  alert("Order: " + layanan + " (fitur belum aktif)");
-}
+window.logout = () => {
+  signOut(auth);
+  location.href = "login.html";
+};
 </script>
 
 </body>
